@@ -9,4 +9,5 @@
 https://docs.ckeditor.com/ckeditor5/latest/builds/guides/quick-start.html
 https://stackoverflow.com/questions/46816098/how-to-get-data-from-ckeditor5-instance
 https://docs.ckeditor.com/ckeditor5/latest/api/module_upload_filerepository-UploadAdapter.html
+https://github.com/think2011/localResizeIMG/wiki/2.-%E5%8F%82%E6%95%B0%E6%96%87%E6%A1%A3
 
