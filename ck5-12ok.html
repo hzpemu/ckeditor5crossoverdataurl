@@ -1,0 +1,161 @@
+	<html><head><meta charset="UTF-8">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+		<script src="https://cdn.ckeditor.com/ckeditor5/12.3.0/classic/ckeditor.js"></script>
+		
+		<script src="https://rawcdn.githack.com/think2011/localResizeIMG/4875c750375be7e6467596f24f148ad033a2d72f/dist/lrz.all.bundle.js"></script>		
+		
+		
+		 <script type="text/javascript">
+		 /*
+		
+		 https://github.com/think2011/localResizeIMG/blob/master/dist/lrz.all.bundle.js
+		https://raw.githubusercontent.com/ckeditor/ckeditor5-build-classic/master/build/ckeditor.js			
+		
+		https://cdn.ckeditor.com/ckeditor5/12.3.0/classic/ckeditor.js		
+		*/
+		 var theEditor;
+          var thefile;
+
+			   
+	function blobtrue(file){
+		var torf
+		if (typeof(file.name) == "undefined")
+		{
+			 torf=true;
+		}
+		else{torf=false;}
+
+		return torf
+	}
+
+	function addTo(){
+		 if (blobtrue(thefile)==true)
+		 {
+			 //alert('不是图像是blob');
+			 blobToDataURL(thefile, function (dataurl) {
+					theEditor.setData(theEditor.getData()+ '<img src="' + dataurl + '">');
+				   theEditor.setData(theEditor.getData()+ '<p></p>'); 
+			// console.log(dataurl);
+			});		
+		 }
+		 else
+		 {
+		 ReadDataFile3(thefile);
+		 } 
+	}
+	
+
+
+function blobToDataURL(blob, callback) {
+var a = new FileReader();
+a.onload = function (e) { callback(e.target.result); }
+a.readAsDataURL(blob);
+}
+
+    function ReadDataFile3(file)
+    {
+	    lrz(file, {width: 640})//limit output width and auto adjust hight fit width限制生成图片的宽度并自动调整高度以适应宽度而让图像看起来不变型
+        .then(function (rst) {//compress output 压缩后的输出
+            
+               theEditor.setData(theEditor.getData()+ '<img src="' + rst.base64 + '">');
+			   theEditor.setData(theEditor.getData()+ '<p></p>'); 
+			
+
+            return rst;		   
+        })
+		/*
+        .then(function (rst) {
+
+        })
+        .catch(function (err) {
+           
+            alert(err);
+        })*/
+        .always(function () {
+           
+        });
+	}	
+	
+	function submitcontent()
+	{
+	//this function for post editor content to server
+	alert(theEditor.getData());
+	/*以下是两个post的参考例子  example for post 
+	var fd = new FormData(theEditor.getData());
+fd.append("CustomField", "This is some extra data");
+$.ajax({
+  url: "xxx.php",
+  type: "POST",
+  data: fd,
+  processData: false,  // 不处理数据
+  contentType: false   // 不设置内容类型
+});
+
+
+        $.ajax({
+            url:'xxx.php',
+            data:theEditor.getData(),
+            type:'post',
+            dataType:'text',
+            success:function(msg){
+                if(msg=='1'){
+                    console.log('添加成功');
+                }else{
+                    console.log('添加失败')
+                }
+            }
+             
+        })
+	*/
+	}
+
+
+
+		 </script>  
+		
+		</head>
+
+		<body>
+		
+		
+		<textarea name="content" id="editor">This is some sample content.</textarea>
+			<script>
+			ClassicEditor
+				.create( document.querySelector( '#editor' ) )
+				.then( editor => {
+				theEditor=editor;
+        
+        try
+  {
+  
+    editor.plugins.get( 'FileRepository' ).createLoader  = function( file ) {
+   /* alert(loader.file.name);*/
+   thefile=file;
+    
+    $('#cl1').click();
+    
+  return file;
+};/**/
+  
+  }
+catch(err)
+  {
+  
+  }
+       
+					//console.log( editor );
+				} )
+				.catch( 
+        //error => {
+					
+         // console.error( error );
+          
+				//} 
+        );
+			
+	
+		</script>
+		<button id="cl1" type='submit' onclick='addTo()' style="display:none;">don't show me </button>
+		<button id="cl1" type='submit' onclick='submitcontent()' >submit</button>
+		</body>
+		</html>
